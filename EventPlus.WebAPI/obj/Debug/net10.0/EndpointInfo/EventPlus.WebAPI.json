@@ -1,53 +1,476 @@
 {
-  "openapi": "3.1.1",
+  "openapi": "3.0.4",
   "info": {
-    "title": "EventPlus.WebAPI | v1",
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "https://localhost:7020"
+    "title": "API de Eventos",
+    "description": "Aplicação para gerenciamento de eventos",
+    "termsOfService": "https://example.com.terms",
+    "contact": {
+      "name": "Davi Muniz",
+      "url": "https://github.com/davizqk"
     },
-    {
-      "url": "http://localhost:5175"
-    }
-  ],
+    "license": {
+      "name": "Exemplo de licensa",
+      "url": "https://example.com/license"
+    },
+    "version": "v1"
+  },
   "paths": {
-    "/WeatherForecast": {
+    "/api/Instituicao": {
       "get": {
         "tags": [
-          "WeatherForecast"
+          "Instituicao"
         ],
-        "operationId": "GetWeatherForecast",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Instituicao"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDTO"
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Instituicao/{id}": {
+      "get": {
+        "tags": [
+          "Instituicao"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Instituicao"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Instituicao"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TipoEvento": {
+      "get": {
+        "tags": [
+          "TipoEvento"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "TipoEvento"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TipoEvento/{id}": {
+      "get": {
+        "tags": [
+          "TipoEvento"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TipoEvento"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TipoEvento"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TipoUsuario": {
+      "get": {
+        "tags": [
+          "TipoUsuario"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "TipoUsuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuarioDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuarioDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuarioDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TipoUsuario/{id}": {
+      "get": {
+        "tags": [
+          "TipoUsuario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TipoUsuario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuarioDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuarioDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuarioDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TipoUsuario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuario/{id}": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuario": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -55,42 +478,153 @@
   },
   "components": {
     "schemas": {
-      "WeatherForecast": {
+      "InstituicaoDTO": {
+        "required": [
+          "nomeFantasia"
+        ],
         "type": "object",
         "properties": {
-          "date": {
+          "nomeFantasia": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "cnpj": {
             "type": "string",
-            "format": "date"
+            "nullable": true
           },
-          "temperatureC": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "temperatureF": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "summary": {
-            "type": [
-              "null",
-              "string"
-            ]
+          "endereco": {
+            "type": "string",
+            "nullable": true
           }
-        }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "required": [
+          "email",
+          "senha"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "senha": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TipoEventoDTO": {
+        "required": [
+          "titulo"
+        ],
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TipoUsuario": {
+        "type": "object",
+        "properties": {
+          "idTipoUsuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titulo": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TipoUsuarioDTO": {
+        "required": [
+          "titulo"
+        ],
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "maxLength": 60,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "idTipoUsuario": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "idTipoUsuarioNavigation": {
+            "$ref": "#/components/schemas/TipoUsuario"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Insira o token: ",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
   "tags": [
     {
-      "name": "WeatherForecast"
+      "name": "Instituicao"
+    },
+    {
+      "name": "Login"
+    },
+    {
+      "name": "TipoEvento"
+    },
+    {
+      "name": "TipoUsuario"
+    },
+    {
+      "name": "Usuario"
     }
   ]
 }
