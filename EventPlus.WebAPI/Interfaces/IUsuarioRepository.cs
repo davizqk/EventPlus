@@ -1,4 +1,5 @@
-﻿using EventPlus.WebAPI.Models;
+﻿using EventPlus.WebAPI.DTO;
+using EventPlus.WebAPI.Models;
 
 namespace EventPlus.WebAPI.Interfaces;
 

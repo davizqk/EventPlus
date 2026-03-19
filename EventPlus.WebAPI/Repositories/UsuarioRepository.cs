@@ -1,4 +1,5 @@
 ﻿using EventPlus.WebAPI.BdContextEvent;
+using EventPlus.WebAPI.DTO;
 using EventPlus.WebAPI.Interfaces;
 using EventPlus.WebAPI.Models;
 using EventPlus.WebAPI.Utils;
@@ -68,6 +69,6 @@ public class UsuarioRepository : IUsuarioRepository
 
     public List<Usuario> Listar()
     {
-        throw new NotImplementedException();
+        return _context.Usuarios.OrderBy(Usuario => Usuario.Nome).ToList();
     }
 }

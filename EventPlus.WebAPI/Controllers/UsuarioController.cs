@@ -1,4 +1,5 @@
-﻿using EventPlus.WebAPI.Interfaces;
+﻿using EventPlus.WebAPI.DTO;
+using EventPlus.WebAPI.Interfaces;
 using EventPlus.WebAPI.Models;
 using EventPlus.WebAPI.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,19 @@ public class UsuarioController : ControllerBase
     public UsuarioController(IUsuarioRepository usuarioRepository)
     {
         _usuarioRepository = usuarioRepository;
+    }
+
+    [HttpGet]
+    public IActionResult Listar()
+    {
+        try
+        {
+            return Ok(_usuarioRepository.Listar());
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 
     /// <summary>
@@ -41,13 +55,22 @@ public class UsuarioController : ControllerBase
     /// <param name="usuario">Usuário a ser cadastrado</param>
     /// <returns>Status code 201 e o usuário cadastrado</returns>
     [HttpPost]
-    public IActionResult Cadastrar(Usuario usuario)
+    public IActionResult Cadastrar(UsuarioDTO usuario)
     {
         try
         {
-            _usuarioRepository.Cadastrar(usuario);
+            var novoUsuario = new Usuario
+            {
+                Nome = usuario.Nome!,
+                Senha = usuario.Senha!,
+                Email = usuario.Email!,
+                IdTipoUsuario = usuario.IdTipoUsuario,
 
-            return StatusCode(201, usuario);
+            };
+
+            _usuarioRepository.Cadastrar(novoUsuario);
+
+            return StatusCode(201, novoUsuario);
         }
         catch (Exception erro)
         {

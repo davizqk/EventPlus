@@ -87,12 +87,53 @@ public class EventoController : ControllerBase
             {
                 Nome = evento.Nome!,
                 Descricao = evento.Descricao!,
-                DataEvento = evento.DataEvento!
+                DataEvento = evento.DataEvento!,
+                IdTipoEvento = evento.IdTipoEvento,
+                IdInstituicao = evento.IdTipoEvento
             };
 
             _eventoRepository.Cadastrar(novoEvento);
 
             return StatusCode(201, novoEvento);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Atualizar(Guid id, EventoDTO evento)
+    {
+        try
+        {
+            var eventoAtualizado = new Evento
+            {
+                Nome = evento.Nome!,
+                Descricao = evento.Descricao!,
+                DataEvento = evento.DataEvento!,
+                IdTipoEvento = evento.IdTipoEvento,
+                IdInstituicao = evento.IdTipoEvento
+            };
+
+            _eventoRepository.Atualizar(id, eventoAtualizado);
+
+            return StatusCode(204, evento);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(Guid id)
+    {
+        try
+        {
+            _eventoRepository.Deletar(id);
+
+            return NoContent();
         }
         catch (Exception erro)
         {
