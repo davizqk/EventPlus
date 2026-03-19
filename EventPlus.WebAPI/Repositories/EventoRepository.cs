@@ -16,18 +16,17 @@ public class EventoRepository : IEventoRepository
 
     public void Atualizar(Guid id, Evento evento)
     {
-        var eventoBuscado = _context.Eventos.Find(id)!;
+        var EventoBuscado = _context.Eventos.Find(id);
 
-        if (eventoBuscado != null)
+        if (EventoBuscado != null)
         {
-            eventoBuscado.Nome = String.IsNullOrWhiteSpace(evento.Nome) ? 
-                eventoBuscado.Nome : evento.Nome;
-            eventoBuscado.Descricao = String.IsNullOrWhiteSpace(evento.Descricao) ?
-                eventoBuscado.Descricao : evento.Descricao;
-            eventoBuscado.DataEvento = evento.DataEvento != default(DateTime) ?
-                eventoBuscado.DataEvento : evento.DataEvento;
-
-            _context.Eventos.Update(eventoBuscado);
+            EventoBuscado.Presencas = evento.Presencas;
+            EventoBuscado.Descricao = evento.Descricao;
+            EventoBuscado.DataEvento = evento.DataEvento;
+            EventoBuscado.Nome = evento.Nome;
+            EventoBuscado.IdInstituicaoNavigation = evento.IdInstituicaoNavigation;
+            EventoBuscado.IdTipoEventoNavigation = evento.IdTipoEventoNavigation;
+            //O SaveChanges() detecta as mudanças na propriedade "Titulo" automaticamente
             _context.SaveChanges();
         }
     }
