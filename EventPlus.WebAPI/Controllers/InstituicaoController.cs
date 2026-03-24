@@ -1,6 +1,7 @@
 ﻿using EventPlus.WebAPI.DTO;
 using EventPlus.WebAPI.Interfaces;
 using EventPlus.WebAPI.Models;
+using EventPlusTorloni.WebAPI.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,7 +65,7 @@ public class InstituicaoController : ControllerBase
         {
             var novaInstituicao = new Instituicao
             {
-                Cnpj = instituicao.Cnpj!,
+                Cnpj = instituicao.CNPJ!,
                 Endereco = instituicao.Endereco!,
                 NomeFantasia = instituicao.NomeFantasia!
             };
@@ -91,7 +92,7 @@ public class InstituicaoController : ControllerBase
         {
             var instituicaoAtualizada = new Instituicao
             {
-                Cnpj = instituicao.Cnpj!,
+                Cnpj = instituicao.CNPJ!,
                 Endereco = instituicao.Endereco!,
                 NomeFantasia = instituicao.NomeFantasia!
             };

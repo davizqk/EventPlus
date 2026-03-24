@@ -1,10 +1,11 @@
-﻿using EventPlus.WebAPI.DTO;
+﻿
 using EventPlus.WebAPI.Interfaces;
 using EventPlus.WebAPI.Models;
+using EventPlusTorloni.WebAPI.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventPlus.WebAPI.Controllers;
+namespace EventPlusTorloni.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -17,12 +18,28 @@ public class EventoController : ControllerBase
         _eventoRepository = eventoRepository;
     }
 
+    /// <summary>
+    /// Enpoint da API que faz a chamada para o método de listar os eventos
+    /// </summary>
+    /// <returns>Status code e a lista de eventos</returns>
+    [HttpGet]
+    public IActionResult Get()
+    {
+        try
+        {
+            return Ok(_eventoRepository.Listar());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
     /// <summary>
-    /// Endpoint da API que faz chamada para o método de listar os eventos filtrando pela id do usuário
+    /// Endpoint da API que faz a chamada para o método de listar eventos filtando pelo id do usuário
     /// </summary>
     /// <param name="IdUsuario">Id do usuário para filtragem</param>
-    /// <returns>Status code 200 e um listar de eventos</returns>
+    /// <returns>Status code 200 e uma lista de eventos</returns>
     [HttpGet("Usuario/{IdUsuario}")]
     public IActionResult ListarPorId(Guid IdUsuario)
     {
@@ -36,9 +53,8 @@ public class EventoController : ControllerBase
         }
     }
 
-
     /// <summary>
-    /// Endpoint da API que faz chamada para o método de listar.
+    /// Endpoint da API que faz a chamada para o método de listar os próximos eventos
     /// </summary>
     /// <returns>Status code 200 e a lista dos próximos eventos</returns>
     [HttpGet("ListarProximos")]
@@ -54,83 +70,83 @@ public class EventoController : ControllerBase
         }
     }
 
-    [HttpGet]
-    public IActionResult Listar()
-    {
-        try
-        {
-            return Ok(_eventoRepository.Listar());
-        }
-        catch (Exception erro)
-        {
-
-            return BadRequest(erro.Message);
-        }
-    }
+    /// <summary>
+    /// Enpoint da API que faz a chamada para o método de cadastrar um evento
+    /// </summary>
+    /// <param name="evento">Evento a ser cadastrado</param>
+    /// <returns>Status code e o evento cadastrado</returns>
     [HttpPost]
-    public IActionResult Cadastrar(EventoDTO Evento)
+    public IActionResult Post(EventoDTO eventoDto)
     {
         try
         {
+            // Converte DTO para Entidade
             var novoEvento = new Evento
             {
-                Nome = Evento.Nome!,
-                DataEvento = Evento.DataEvento!,
-                Descricao = Evento.Descricao!,
-                IdTipoEvento = Evento.IdTipoEvento!,
-                IdInstituicao = Evento.IdInstituicao!
+                Nome = eventoDto.NomeEvento!,
+                Descricao = eventoDto.Descricao!,
+                DataEvento = eventoDto.DataEvento,
+                IdTipoEvento = eventoDto.IdTipoEvento,
+                IdInstituicao = eventoDto.IdInstituicao
             };
-
             _eventoRepository.Cadastrar(novoEvento);
+
+
             return StatusCode(201, novoEvento);
         }
-        catch (Exception erro)
+        catch (Exception e)
         {
-            return BadRequest(erro.Message);
-        }
-    }
-    [HttpPut("{id}")]
-    public IActionResult Atualizar(Guid id, EventoDTO evento)
-    {
-        try
-        {
-            var EventoAtualizado = new Evento
-            {
-                Nome = evento.Nome!,
-                DataEvento = evento.DataEvento!,
-                Descricao = evento.Descricao!,
-                IdTipoEvento = evento.IdTipoEvento!,
-                IdInstituicao = evento.IdInstituicao!
-            };
-
-            _eventoRepository.Atualizar(id, EventoAtualizado);
-            return StatusCode(204, EventoAtualizado);
-        }
-        catch (Exception erro)
-        {
-            return BadRequest(erro.Message);
+            return BadRequest(e.Message);
         }
     }
 
     /// <summary>
-    /// Endpoint da API que faz chamada para o método de deletar o tipo de Evento
+    /// Enpoint da API que faz a chamada para o método de atualizar um evento
     /// </summary>
-    /// <param name="id">Tipo de Evento a ser excluido</param>
-    /// <returns>Status code 204</returns>
+    /// <param name="id">Id do evento a ser atualizado</param>
+    /// <param name="evento">Evento com os dados atualizados</param>
+    /// <returns>Status code e o evento atualizado</returns>
+    [HttpPut("{id}")]
+    public IActionResult Put(Guid id, EventoDTO eventoDto)
+    {
+        try
+        {
+            // Converte DTO para Entidade
+            var eventoAtualizado = new Evento
+            {
+                Nome = eventoDto.NomeEvento!,
+                Descricao = eventoDto.Descricao!,
+                DataEvento = eventoDto.DataEvento,
+                IdTipoEvento = eventoDto.IdTipoEvento,
+                IdInstituicao = eventoDto.IdInstituicao
+            };
+            _eventoRepository.Atualizar(id, eventoAtualizado);
 
+            return StatusCode(204, eventoAtualizado);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// Enpoint da API que faz a chamada para o método de deletar um evento
+    /// </summary>
+    /// <param name="id">Id do evento a ser excluído</param>
+    /// <returns>Status code</returns>
     [HttpDelete("{id}")]
-    public IActionResult Deletar(Guid id)
+    public IActionResult Delete(Guid id)
     {
         try
         {
             _eventoRepository.Deletar(id);
-            return NoContent();  // Retorna status code 204 para indicar que a operação foi bem-sucedida, mas não há conteúdo para retornar
+
+            return NoContent();
         }
-        catch (Exception erro)
+        catch (Exception e)
         {
-            return BadRequest(erro.Message);
+            return BadRequest(e.Message);
         }
     }
-
-
 }

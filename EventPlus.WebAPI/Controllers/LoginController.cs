@@ -1,6 +1,7 @@
 ﻿using EventPlus.WebAPI.DTO;
 using EventPlus.WebAPI.Interfaces;
 using EventPlus.WebAPI.Models;
+using EventPlusTorloni.WebAPI.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -33,12 +34,17 @@ public class LoginController : ControllerBase
             }
 
             //caso encontre o usuario, prosseguir para criação do token 
+
+            //informações que serão fornecidas no token
             //1 - Definir as informações(claims) que serão fornecidas no token (Payload)
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.Senha),
+                //formato da cliam
+                new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
+                new Claim(JwtRegisteredClaimNames.Name, usuarioBuscado.Nome),
+                new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuarioNavigation!.Titulo)
 
-                new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email!)
 
                 //existe a possibilidade de criar uma claim personalizada
                 //new Claim("Claim Personalizada", "Valor da claim personalizada")

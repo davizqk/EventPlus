@@ -1,11 +1,8 @@
-﻿using EventPlus.WebAPI.DTO;
-using EventPlus.WebAPI.Interfaces;
-using EventPlus.WebAPI.Models;
-using EventPlus.WebAPI.Repositories;
+﻿using EventPlus.WebAPI.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventPlus.WebAPI.Controllers;
+namespace EventPlusTorloni.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -15,19 +12,6 @@ public class PresencaController : ControllerBase
     public PresencaController(IPresencaRepository presencaRepository)
     {
         _presencaRepository = presencaRepository;
-    }
-
-    [HttpGet]
-    public IActionResult Listar()
-    {
-        try
-        {
-            return Ok(_presencaRepository.Listar());
-        }
-        catch (Exception erro)
-        {
-            return BadRequest(erro.Message);
-        }
     }
 
     /// <summary>
@@ -49,77 +33,20 @@ public class PresencaController : ControllerBase
     }
 
     /// <summary>
-    /// Endpoint da API que retorna uma lista de presenças filtrada por usuário
+    /// Endpoint da API que retorna um lista de presenças filtrada por usuário
     /// </summary>
-    /// <param name="idUsuario">id do usuário para filtragem</param>
-    /// <returns>lista de presenças filtrada pelo usuário</returns>
-    [HttpGet("ListarMinhas /{idUsuario}")]
+    /// <param name="idUsuario">id do usuário para fitlragem</param>
+    /// <returns>uma lista de presenças filtrad pelo usuário</returns>
+    [HttpGet("ListarMinhas/{idUsuario}")]
     public IActionResult BuscarPorUsuario(Guid idUsuario)
     {
         try
         {
             return Ok(_presencaRepository.ListarMinhas(idUsuario));
         }
-        catch (Exception erro)
+        catch (Exception e)
         {
-            return BadRequest(erro.Message);
-        }
-    }
-
-    [HttpPost]
-    public IActionResult Inscrever(PresencaDTO presenca)
-    {
-        try
-        {
-            var novaPresenca = new Presenca
-            {
-                Situacao = presenca.Situacao!,
-                IdUsuario = presenca.IdUsuario,
-            };
-
-            _presencaRepository.Inscrever(novaPresenca);
-
-            return StatusCode(201, novaPresenca);
-        }
-        catch (Exception erro)
-        {
-            return BadRequest(erro.Message);
-        }
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult Atualizar(Guid id, PresencaDTO presenca)
-    {
-        try
-        {
-            var presencaAtualizada = new Presenca
-            {
-                Situacao = presenca.Situacao
-            };
-
-            _presencaRepository.Atualizar(id, presencaAtualizada);
-
-            return StatusCode(204, presenca);
-        }
-        catch (Exception erro)
-        {
-            return BadRequest(erro.Message);
-        }
-    }
-
-
-    [HttpDelete]
-    public IActionResult Delete(Guid id)
-    {
-        try
-        {
-            _presencaRepository.Deletar(id);
-
-            return NoContent();
-        }
-        catch (Exception erro)
-        {
-            return BadRequest(erro.Message);
+            return BadRequest(e.Message);
         }
     }
 }

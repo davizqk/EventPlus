@@ -14,15 +14,14 @@ public class PresencaRepository : IPresencaRepository
         _eventoContext = eventContext;
     }
 
-    public void Atualizar(Guid id, Presenca presenca)
+    public void Atualizar(Guid IdPresencaEvento, Presenca presenca)
     {
-        var presencaBuscada = _eventoContext.Presencas.Find(id);
+        var presencaBuscada = _eventoContext.Presencas.Find(IdPresencaEvento);
 
         if (presencaBuscada != null)
         {
-            presencaBuscada.Situacao = presenca.Situacao;
+            presencaBuscada.Situacao = !presencaBuscada.Situacao;
 
-            _eventoContext.Presencas.Update(presencaBuscada);
             _eventoContext.SaveChanges();
         }
     }

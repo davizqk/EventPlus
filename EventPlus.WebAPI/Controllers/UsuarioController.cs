@@ -2,6 +2,7 @@
 using EventPlus.WebAPI.Interfaces;
 using EventPlus.WebAPI.Models;
 using EventPlus.WebAPI.Repositories;
+using EventPlusTorloni.WebAPI.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EventPlus.WebAPI.DTO;
+namespace EventPlusTorloni.WebAPI.DTO;
 
 public class TipoEventoDTO
 {
